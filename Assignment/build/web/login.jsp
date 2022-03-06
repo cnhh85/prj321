@@ -12,6 +12,12 @@
         <title>Login Page</title>
     </head>
     <body>
+        <%
+            String error = (String) request.getAttribute("ERROR");
+            if (error == null) {
+                error = "";
+            }
+        %> 
         <h1>Login Page</h1>
         <form action="MainController" method="POST">
             User ID <input type="text" name="userID" placeholder="Username"></br>
@@ -19,12 +25,6 @@
             <input type="submit" name="action" value="Login">
             <input type="reset" value="Reset">
         </form>
-        <%
-            String error = (String) request.getAttribute("ERROR");
-            if (error == null) {
-                error = "";
-            }
-        %> 
-        <%= error%>
+        <%=error%>
     </body>
 </html>

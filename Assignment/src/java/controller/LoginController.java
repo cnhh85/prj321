@@ -50,7 +50,7 @@ public class LoginController extends HttpServlet {
                     request.setAttribute("ERROR", "Role is not support");
                 }
             } else {
-                request.setAttribute("ERROOR", "Incorrect username or password");
+                request.setAttribute("ERROR", "Incorrect username or password");
             }
         } catch (Exception e) {
             log("Error at LoginController" + e.toString());

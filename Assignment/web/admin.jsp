@@ -4,6 +4,7 @@
     Author     : markhipz
 --%>
 
+<%@page import="user.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,14 @@
         <title>Admin Page</title>
     </head>
     <body>
-        <h1>Welcome to Admin page</h1>
+        <%
+            User user = (User) session.getAttribute("LOGIN_USER");
+            if (user == null) {
+                response.sendRedirect("login.jsp");
+                return;
+            }
+        %>
+        <h1>Welcome <%=user.getFullName()%> to Admin page</h1>
+        <a href="MainController?action=Logout" >Logout</a>
     </body>
 </html>
