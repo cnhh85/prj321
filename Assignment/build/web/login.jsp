@@ -19,5 +19,12 @@
             <input type="submit" name="action" value="Login">
             <input type="reset" value="Reset">
         </form>
+        <%
+            String error = (String) request.getAttribute("ERROR");
+            if (error == null) {
+                error = "";
+            }
+        %> 
+        <%= error%>
     </body>
 </html>
