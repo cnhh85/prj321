@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 import utils.DBUtils;
 
 /**
@@ -19,6 +20,7 @@ import utils.DBUtils;
 public class UserDAO {
 
     private static final String LOGIN = "select fullName, roleID, address, birthday, phone, email, status from tblUsers where userID=? and password=?";
+    private static final String PRODUCT = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct";
 
     public User checkLogin(String userID, String password) throws SQLException {
         User user = null;
@@ -57,6 +59,45 @@ public class UserDAO {
             }
         }
         return user;
+    }
+
+    public List<Product> getListProduct() throws SQLException {
+        List<Product> list = null;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(PRODUCT);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String productID = rs.getString("productID");
+                    String productName = rs.getString("productName");
+                    String image = rs.getString("image");
+                    int price = rs.getInt("price");
+                    int quantity = rs.getInt("quantity");
+                    String categoryID = rs.getString("categoryID");
+                    Date importDate = new Date(rs.getDate("importDate").getTime());
+                    Date usingDate = new Date(rs.getDate("usingDate").getTime());
+                    Product product = new Product(productID, productName, image, price, quantity, categoryID, importDate, usingDate);
+                    list.add(product);
+                }
+            }
+        } catch (Exception e) {
+            System.out.print(e.toString()); 
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
     }
 
 }

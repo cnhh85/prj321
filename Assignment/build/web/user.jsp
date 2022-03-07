@@ -19,7 +19,7 @@
                 response.sendRedirect("login.jsp");
                 return;
             }
-        %>        
+        %>
         <h1>Welcome <%=user.getFullName()%></h1>
         <h1>Buy your own keyboard</h1>
         <a href="MainController?action=Logout" >Logout</a>
