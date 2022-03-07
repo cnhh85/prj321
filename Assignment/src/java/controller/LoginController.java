@@ -7,12 +7,14 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import user.Product;
 import user.User;
 import user.UserDAO;
 
@@ -44,6 +46,8 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("LOGIN_USER", user);
                 if (ADMIN.equals(roleID)) {
                     url = ADMIN_PAGE;
+                    List<Product> listProduct = dao.getListProduct();
+                    session.setAttribute("PRODUCT_LIST", listProduct);
                 } else if (USER.equals(roleID)) {
                     url = USER_PAGE;
                 } else {

@@ -19,9 +19,8 @@ public class Product {
     private int quantity;
     private String categoryID;
     private Date importDate;
-    private Date usingDate;
 
-    public Product(String productID, String productName, String image, int price, int quantity, String categoryID, Date importDate, Date usingDate) {
+    public Product(String productID, String productName, String image, int price, int quantity, String categoryID, Date importDate) {
         this.productID = productID;
         this.productName = productName;
         this.image = image;
@@ -29,7 +28,6 @@ public class Product {
         this.quantity = quantity;
         this.categoryID = categoryID;
         this.importDate = importDate;
-        this.usingDate = usingDate;
     }
 
     public Product() {
@@ -89,14 +87,6 @@ public class Product {
 
     public void setImportDate(Date importDate) {
         this.importDate = importDate;
-    }
-
-    public Date getUsingDate() {
-        return usingDate;
-    }
-
-    public void setUsingDate(Date usingDate) {
-        this.usingDate = usingDate;
     }
     
 }

@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import utils.DBUtils;
@@ -20,7 +21,7 @@ import utils.DBUtils;
 public class UserDAO {
 
     private static final String LOGIN = "select fullName, roleID, address, birthday, phone, email, status from tblUsers where userID=? and password=?";
-    private static final String PRODUCT = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct";
+    private static final String PRODUCT = "select productID, productName, image, price, quantity, categoryID, importDate from tblProduct";
 
     public User checkLogin(String userID, String password) throws SQLException {
         User user = null;
@@ -62,7 +63,7 @@ public class UserDAO {
     }
 
     public List<Product> getListProduct() throws SQLException {
-        List<Product> list = null;
+        List<Product> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -79,13 +80,11 @@ public class UserDAO {
                     int quantity = rs.getInt("quantity");
                     String categoryID = rs.getString("categoryID");
                     Date importDate = new Date(rs.getDate("importDate").getTime());
-                    Date usingDate = new Date(rs.getDate("usingDate").getTime());
-                    Product product = new Product(productID, productName, image, price, quantity, categoryID, importDate, usingDate);
-                    list.add(product);
+                    list.add(new Product(productID, productName, image, price, quantity, categoryID, importDate));
                 }
             }
         } catch (Exception e) {
-            System.out.print(e.toString()); 
+            e.printStackTrace();
         } finally {
             if (rs != null) {
                 rs.close();
