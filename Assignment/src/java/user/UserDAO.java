@@ -9,9 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import utils.DBUtils;
 
 /**
@@ -21,20 +19,19 @@ import utils.DBUtils;
 public class UserDAO {
 
     private static final String LOGIN = "select fullName, roleID, address, birthday, phone, email, status from tblUsers where userID=? and password=?";
-    private static final String PRODUCT = "select productID, productName, image, price, quantity, categoryID, importDate from tblProduct";
 
     public User checkLogin(String userID, String password) throws SQLException {
         User user = null;
         Connection conn = null;
-        PreparedStatement ptm = null;
+        PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             conn = DBUtils.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(LOGIN);
-                ptm.setString(1, userID);
-                ptm.setString(2, password);
-                rs = ptm.executeQuery();
+                stm = conn.prepareStatement(LOGIN);
+                stm.setString(1, userID);
+                stm.setString(2, password);
+                rs = stm.executeQuery();
                 if (rs.next()) {
                     String fullName = rs.getString("fullName");
                     String roleID = rs.getString("roleID");
@@ -52,51 +49,14 @@ public class UserDAO {
             if (rs != null) {
                 rs.close();
             }
-            if (ptm != null) {
-                ptm.close();
+            if (stm != null) {
+                stm.close();
             }
             if (conn != null) {
                 conn.close();
             }
         }
         return user;
-    }
-
-    public List<Product> getListProduct() throws SQLException {
-        List<Product> list = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement ptm = null;
-        ResultSet rs = null;
-        try {
-            conn = DBUtils.getConnection();
-            if (conn != null) {
-                ptm = conn.prepareStatement(PRODUCT);
-                rs = ptm.executeQuery();
-                while (rs.next()) {
-                    String productID = rs.getString("productID");
-                    String productName = rs.getString("productName");
-                    String image = rs.getString("image");
-                    int price = rs.getInt("price");
-                    int quantity = rs.getInt("quantity");
-                    String categoryID = rs.getString("categoryID");
-                    Date importDate = new Date(rs.getDate("importDate").getTime());
-                    list.add(new Product(productID, productName, image, price, quantity, categoryID, importDate));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ptm != null) {
-                ptm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return list;
     }
 
 }

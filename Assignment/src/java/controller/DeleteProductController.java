@@ -11,48 +11,31 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import user.User;
-import user.UserDAO;
+import user.ProductDAO;
 
 /**
  *
  * @author markhipz
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
-public class LoginController extends HttpServlet {
+@WebServlet(name = "DeleteProductController", urlPatterns = {"/DeleteController"})
+public class DeleteProductController extends HttpServlet {
 
-    private static final String ERROR = "login.jsp";
-    private static final String ADMIN = "AD";
-    private static final String ADMIN_PAGE = "AdminController";
-    private static final String USER_PAGE = "user.jsp";
-    private static final String USER = "US";
+    private static final String ERROR = "admin.jsp";
+    private static final String SUCCESS = "admin.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
+        ProductDAO pDao = new ProductDAO();
         try {
-            String userID = request.getParameter("userID");
-            String password = request.getParameter("password");
-            UserDAO dao = new UserDAO();
-            User user = dao.checkLogin(userID, password);
-            if (user != null) {
-                String roleID = user.getRoleID();
-                HttpSession session = request.getSession();
-                session.setAttribute("LOGIN_USER", user);
-                if (ADMIN.equals(roleID)) {
-                    url = ADMIN_PAGE;
-                } else if (USER.equals(roleID)) {
-                    url = USER_PAGE;
-                } else {
-                    request.setAttribute("ERROR", "Role is not support");
-                }
-            } else {
-                request.setAttribute("ERROR", "Incorrect username or password");
+            String productID = request.getParameter("productID");
+            boolean check = pDao.deleteProduct(productID);
+            if (check) {
+                url = SUCCESS;
             }
         } catch (Exception e) {
-            log("Error at LoginController" + e.toString());
+            log("Error at DeleteProductController" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

@@ -24,7 +24,7 @@
             }
 
             List<Product> listProduct = (List<Product>) session.getAttribute("PRODUCT_LIST");
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");           
         %>
         <h1>Welcome <%=user.getFullName()%> to Admin page</h1>
         <a href="MainController?action=Logout" >Logout</a>
@@ -52,14 +52,24 @@
                 <tr>
                     <td><%= count++%></td>
                     <td><%= product.getProductID()%></td>
-                    <td><%= product.getProductName()%></td>
+                    <td>
+                        <input type="text" name="fullName" value="<%= product.getProductName()%>" />
+                    </td>
                     <td><img src="<%= product.getImage()%>" /></td>
-                    <td><%= product.getPrice()%></td>
-                    <td><%= product.getQuantity()%></td>
-                    <td><%= product.getCategoryID()%></td>
-                    <td><%= sdf.format(product.getImportDate()))%></td>
-                    <td><a>Update</a></td>
-                    <td><a>Remove</a></td>
+                    <td>
+                        <input type="text" name="price" value="<%= product.getPrice()%>" />
+                    </td>
+                    <td>
+                        <input type="text" name="quantity" value="<%= product.getQuantity()%>" />
+                    </td>
+                    <td>
+                        <input type="text" name="categoryID" value="<%= product.getCategoryID()%>" />
+                    </td>
+                    <td>
+                        <input type="text" name="importDate" value="<%= sdf.format(product.getImportDate())%>" />
+                    </td>
+                    <td><input type="submit" name="action" value="update" ></td>
+                    <td><a href="MainController?action=DeleteProduct&productID=<%=product.getProductID()%>">Delete</a></td>
                 </tr>
                 <%}
                         }

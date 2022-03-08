@@ -6,53 +6,39 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import user.User;
-import user.UserDAO;
+import user.Product;
+import user.ProductDAO;
 
 /**
  *
  * @author markhipz
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
-public class LoginController extends HttpServlet {
+@WebServlet(name = "AdminController", urlPatterns = {"/AdminController"})
+public class AdminController extends HttpServlet {
 
-    private static final String ERROR = "login.jsp";
-    private static final String ADMIN = "AD";
-    private static final String ADMIN_PAGE = "AdminController";
-    private static final String USER_PAGE = "user.jsp";
-    private static final String USER = "US";
+    private static final String ERROR = "admin.jsp";
+    private static final String SUCCESS = "admin.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        ProductDAO pDao = new ProductDAO();
         String url = ERROR;
         try {
-            String userID = request.getParameter("userID");
-            String password = request.getParameter("password");
-            UserDAO dao = new UserDAO();
-            User user = dao.checkLogin(userID, password);
-            if (user != null) {
-                String roleID = user.getRoleID();
-                HttpSession session = request.getSession();
-                session.setAttribute("LOGIN_USER", user);
-                if (ADMIN.equals(roleID)) {
-                    url = ADMIN_PAGE;
-                } else if (USER.equals(roleID)) {
-                    url = USER_PAGE;
-                } else {
-                    request.setAttribute("ERROR", "Role is not support");
-                }
-            } else {
-                request.setAttribute("ERROR", "Incorrect username or password");
-            }
+            HttpSession session = request.getSession();
+            List<Product> listProduct = pDao.getListProduct();
+            session.setAttribute("PRODUCT_LIST", listProduct);
+            
         } catch (Exception e) {
-            log("Error at LoginController" + e.toString());
+            log("Error at AdminController " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
