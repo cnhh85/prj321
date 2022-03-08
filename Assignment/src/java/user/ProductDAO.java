@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,17 +23,19 @@ public class ProductDAO {
 
     private static final String SELECT = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct";
     private static final String DELETE = "delete tblProduct where productID=?";
+    private static final String UPDATE = "update tblProduct set productName=?, image=?, price=?, quantity=?, categoryID=?, importDate=?, usingDate=? where productID=?";
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
     public List<Product> getListProduct() throws SQLException {
         List<Product> list = new ArrayList<>();
         Connection conn = null;
-        PreparedStatement ptm = null;
+        PreparedStatement stm = null;
         ResultSet rs = null;
         try {
             conn = DBUtils.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(SELECT);
-                rs = ptm.executeQuery();
+                stm = conn.prepareStatement(SELECT);
+                rs = stm.executeQuery();
                 while (rs.next()) {
                     String productID = rs.getString("productID");
                     String productName = rs.getString("productName");
@@ -51,8 +54,8 @@ public class ProductDAO {
             if (rs != null) {
                 rs.close();
             }
-            if (ptm != null) {
-                ptm.close();
+            if (stm != null) {
+                stm.close();
             }
             if (conn != null) {
                 conn.close();
@@ -71,8 +74,42 @@ public class ProductDAO {
             if (conn != null) {
                 stm = conn.prepareStatement(DELETE);
                 stm.setString(1, productID);
-                int value = stm.executeUpdate();
-                result = value > 0 ? true : false;
+                result = stm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return result;
+    }
+
+    public boolean updateProduct(Product product) throws SQLException{
+        boolean result = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                stm = conn.prepareStatement(UPDATE);
+                stm.setString(1, product.getProductName());
+                stm.setString(2, product.getImage());
+                stm.setString(3, String.valueOf(product.getPrice()));
+                stm.setString(4, String.valueOf(product.getQuantity()));
+                stm.setString(5, product.getCategoryID());
+                stm.setString(6, sdf.format(product.getImportDate()));
+                stm.setString(7, sdf.format(product.getUsingDate()));
+                stm.setString(8, product.getProductID());
+                result = stm.executeUpdate() > 0;
             }
         } catch (Exception e) {
             e.printStackTrace();

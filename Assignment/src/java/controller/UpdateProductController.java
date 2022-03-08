@@ -7,52 +7,54 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import user.Product;
+import user.ProductDAO;
 
 /**
  *
  * @author markhipz
  */
-@WebServlet(name = "MainController", urlPatterns = {"/MainController"})
-public class MainController extends HttpServlet {
+@WebServlet(name = "UpdateProductController", urlPatterns = {"/UpdateProductController"})
+public class UpdateProductController extends HttpServlet {
 
-    private static final String ERROR = "error.jsp";
-    private static final String LOGIN = "Login";
-    private static final String LOGIN_CONTROLLER = "LoginController";
-    private static final String LOGOUT = "Logout";
-    private static final String LOGOUT_CONTROLLER = "LogoutController";
-    private static final String DELETE_PRODUCT = "DeleteProduct";
-    private static final String DELETE_PRODUCT_CONTROLLER = "DeleteProductController";
-    private static final String UPDATE_PRODUCT = "Update";
-    private static final String UPDATE_PRODUCT_CONTROLLER = "UpdateProductController";
+    private static final String ERROR = "AdminController";
+    private static final String SUCCESS = "AdminController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
+        ProductDAO pDao = new ProductDAO();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        boolean check = false;
         try {
-            String action = request.getParameter("action");
-            if (LOGIN.equals(action)) {
-                url = LOGIN_CONTROLLER;
-            } else if (LOGOUT.equals(action)) {
-                url = LOGOUT_CONTROLLER;
-            } else if (DELETE_PRODUCT.equals(action)) {
-                url = DELETE_PRODUCT_CONTROLLER;
-            } else if (UPDATE_PRODUCT.equals(action)) {
-                url = UPDATE_PRODUCT_CONTROLLER;
+            String productID = request.getParameter("productID");
+            String productName = request.getParameter("productName");
+            String image = request.getParameter("image");
+            int price = Integer.parseInt(request.getParameter("price"));
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            String categoryID = request.getParameter("categoryID");
+            String importDate = request.getParameter("importDate");
+            String usingDate = request.getParameter("usingDate");
+            check = pDao.updateProduct(new Product(productID, productName, image, price, quantity, categoryID, sdf.parse(importDate), sdf.parse(usingDate)));
+            if (check) {
+                url = SUCCESS;
             }
         } catch (Exception e) {
-            log("Error at MainController " + e.toString());
+            log("Error at UpdateProductController " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

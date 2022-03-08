@@ -35,7 +35,8 @@ public class AdminController extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             List<Product> listProduct = pDao.getListProduct();
-            session.setAttribute("PRODUCT_LIST", listProduct); 
+            session.setAttribute("PRODUCT_LIST", listProduct);
+            url = SUCCESS;
         } catch (Exception e) {
             log("Error at AdminController " + e.toString());
         } finally {

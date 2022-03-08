@@ -23,8 +23,8 @@ import user.ProductDAO;
 @WebServlet(name = "DeleteProductController", urlPatterns = {"/DeleteProductController"})
 public class DeleteProductController extends HttpServlet {
 
-    private static final String ERROR = "admin.jsp";
-    private static final String SUCCESS = "admin.jsp";
+    private static final String ERROR = "AdminController";
+    private static final String SUCCESS = "AdminController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -36,9 +36,6 @@ public class DeleteProductController extends HttpServlet {
             boolean check = pDao.deleteProduct(productID);
             if (check) {
                 url = SUCCESS;
-                HttpSession session = request.getSession();
-                List<Product> listProduct = pDao.getListProduct();
-                session.setAttribute("PRODUCT_LIST", listProduct);
             }
         } catch (Exception e) {
             log("Error at DeleteProductController" + e.toString());

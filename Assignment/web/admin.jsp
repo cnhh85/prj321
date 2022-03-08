@@ -53,13 +53,17 @@
                 <%if (listProduct.size() > 0) {
                         int count = 1;
                         for (Product product : listProduct) {%>
+            <form action="MainController">
                 <tr>
                     <td><%= count++%></td>
                     <td><%= product.getProductID()%></td>
                     <td>
-                        <input type="text" name="fullName" value="<%= product.getProductName()%>" />
+                        <input type="text" name="productName" value="<%= product.getProductName()%>" />
                     </td>
-                    <td><img src="<%= product.getImage()%>" /></td>
+                    <td>
+                        <img src="<%= product.getImage()%>" />
+                        <input type="text" name="image" value="<%= product.getImage()%>" />
+                    </td>
                     <td>
                         <input type="text" name="price" value="<%= product.getPrice()%>" />
                     </td>
@@ -76,18 +80,19 @@
                         <input type="text" name="usingDate" value="<%= sdf.format(product.getUsingDate())%>" />
                     </td>
                     <td>
+                        <input type ="hidden" name="productID" value="<%=product.getProductID()%>" />
                         <input type="submit" name="action" value="Update" />
-                        <input type ="hidden" name="userID" value="<%=product.getProductID()%>"
                     </td>
                     <td>
                         <a href="MainController?action=DeleteProduct&productID=<%=product.getProductID()%>">Delete</a>
                     </td>
                 </tr>
-                <%}
-                        }
-                    }%>
-            </tbody>
-        </table>
+            </form>
+            <%}
+                    }
+                }%>
+        </tbody>
+    </table>
 
-    </body>
+</body>
 </html>
