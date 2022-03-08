@@ -7,37 +7,32 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import user.Product;
 import user.ProductDAO;
 
 /**
  *
  * @author markhipz
  */
-@WebServlet(name = "AdminController", urlPatterns = {"/AdminController"})
-public class AdminController extends HttpServlet {
+@WebServlet(name = "UserController", urlPatterns = {"/UserController"})
+public class UserController extends HttpServlet {
 
-    private static final String ERROR = "admin.jsp";
-    private static final String SUCCESS = "admin.jsp";
+    private static final String ERROR = "user.jsp";
+    private static final String SUCCESS = "user.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        ProductDAO pDao = new ProductDAO();
         String url = ERROR;
+        ProductDAO pDao = new ProductDAO();
         try {
-            HttpSession session = request.getSession();
-            List<Product> listProduct = pDao.getListProduct();
-            session.setAttribute("PRODUCT_LIST", listProduct); 
+
         } catch (Exception e) {
-            log("Error at AdminController " + e.toString());
+            log("Error at UserController " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
