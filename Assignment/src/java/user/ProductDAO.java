@@ -20,7 +20,7 @@ import utils.DBUtils;
  */
 public class ProductDAO {
 
-    private static final String SELECT = "select productID, productName, image, price, quantity, categoryID, importDate from tblProduct";
+    private static final String SELECT = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct";
     private static final String DELETE = "delete tblProduct where productID=?";
 
     public List<Product> getListProduct() throws SQLException {
@@ -41,7 +41,8 @@ public class ProductDAO {
                     int quantity = rs.getInt("quantity");
                     String categoryID = rs.getString("categoryID");
                     Date importDate = new Date(rs.getDate("importDate").getTime());
-                    list.add(new Product(productID, productName, image, price, quantity, categoryID, importDate));
+                    Date usingDate = new Date(rs.getDate("usingDate").getTime());
+                    list.add(new Product(productID, productName, image, price, quantity, categoryID, importDate, usingDate));
                 }
             }
         } catch (Exception e) {

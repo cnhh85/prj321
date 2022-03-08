@@ -24,10 +24,15 @@
             }
 
             List<Product> listProduct = (List<Product>) session.getAttribute("PRODUCT_LIST");
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");           
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         %>
         <h1>Welcome <%=user.getFullName()%> to Admin page</h1>
         <a href="MainController?action=Logout" >Logout</a>
+        <% if (listProduct == null) {
+        %>
+        <h1>There are no product</h1>
+        <%  } else {
+        %>
         <table border="1">
             <thead>
                 <tr>                   
@@ -39,16 +44,15 @@
                     <th>Quantity</th>
                     <th>Category ID</th>
                     <th>Import Date</th>
+                    <th>Using Date</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
-                <% if (listProduct != null) {
-                        if (listProduct.size() > 0) {
-                            int count = 1;
-                            for (Product product : listProduct) {
-                %>
+                <%if (listProduct.size() > 0) {
+                        int count = 1;
+                        for (Product product : listProduct) {%>
                 <tr>
                     <td><%= count++%></td>
                     <td><%= product.getProductID()%></td>
@@ -68,8 +72,16 @@
                     <td>
                         <input type="text" name="importDate" value="<%= sdf.format(product.getImportDate())%>" />
                     </td>
-                    <td><input type="submit" name="action" value="update" ></td>
-                    <td><a href="MainController?action=DeleteProduct&productID=<%=product.getProductID()%>">Delete</a></td>
+                    <td>
+                        <input type="text" name="usingDate" value="<%= sdf.format(product.getUsingDate())%>" />
+                    </td>
+                    <td>
+                        <input type="submit" name="action" value="Update" />
+                        <input type ="hidden" name="userID" value="<%=product.getProductID()%>"
+                    </td>
+                    <td>
+                        <a href="MainController?action=DeleteProduct&productID=<%=product.getProductID()%>">Delete</a>
+                    </td>
                 </tr>
                 <%}
                         }
