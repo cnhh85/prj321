@@ -7,9 +7,7 @@ package user;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -40,6 +38,12 @@ public class Utility {
             return true;
         }
     }
+    
+    
+    public static boolean isValidImportDate(Date importDate) {
+    Date today = new Date();
+    return importDate.after(today);
+  }
 
     public String getPattern() {
         return pattern;

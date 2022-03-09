@@ -106,7 +106,11 @@ public class AddProductController extends HttpServlet {
             } else if (utility.handleParseDate(importDate) == null) {
                 pE.setImportDateError("Date not exist");
                 isValidated = false;
+            } else if (utility.isValidImportDate(sdf.parse(importDate))) {
+                pE.setImportDateError("Import date cannot before today");
+                isValidated = false;
             }
+
 
             //Handle using date Error
             String usingDate = request.getParameter("usingDate");
