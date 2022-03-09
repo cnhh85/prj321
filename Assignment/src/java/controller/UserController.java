@@ -24,7 +24,7 @@ import user.ProductDAO;
 @WebServlet(name = "UserController", urlPatterns = {"/UserController"})
 public class UserController extends HttpServlet {
 
-    private static final String ERROR = "user.jsp";
+    private static final String ERROR = "error.jsp";
     private static final String SUCCESS = "user.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -33,9 +33,6 @@ public class UserController extends HttpServlet {
         String url = ERROR;
         ProductDAO pDao = new ProductDAO();
         try {
-            HttpSession session = request.getSession();
-            List<Product> listProduct = pDao.getListProduct();
-            session.setAttribute("PRODUCT_LIST", listProduct);
             url = SUCCESS;
         } catch (Exception e) {
             log("Error at UserController " + e.toString());

@@ -22,11 +22,13 @@ import utils.DBUtils;
 public class ProductDAO {
 
     private static final String SELECT = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct";
+    private static final String SEARCH = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct where productName like ?";
     private static final String DELETE = "delete tblProduct where productID=?";
     private static final String UPDATE = "update tblProduct set productName=?, image=?, price=?, quantity=?, categoryID=?, importDate=?, usingDate=? where productID=?";
     private static final String INSERT = "insert into tblProduct(productID, productName, image, price, quantity, categoryID, importDate, usingDate) values(?,?,?,?,?,?,?,?)";
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
+    //these function is for admin only
     public List<Product> getListProduct() throws SQLException {
         List<Product> list = new ArrayList<>();
         Connection conn = null;
@@ -153,5 +155,45 @@ public class ProductDAO {
             }
         }
         return result;
+    }
+
+    //these function is for user only
+    public List<Product> searchProduct(String search) throws SQLException {
+        List<Product> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                stm = conn.prepareStatement(SEARCH);
+                stm.setString(1, "%" + search + "%");
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String productID = rs.getString("productID");
+                    String productName = rs.getString("productName");
+                    String image = rs.getString("image");
+                    int price = rs.getInt("price");
+                    int quantity = rs.getInt("quantity");
+                    String categoryID = rs.getString("categoryID");
+                    Date importDate = new Date(rs.getDate("importDate").getTime());
+                    Date usingDate = new Date(rs.getDate("usingDate").getTime());
+                    list.add(new Product(productID, productName, image, price, quantity, categoryID, importDate, usingDate));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
     }
 }

@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>KEYBOARD</title>
+        <title>GGShop</title>
     </head>
     <body>
         <%
@@ -25,6 +25,10 @@
         %>
         <h1>Welcome <%=user.getFullName()%></h1>
         <a href="MainController?action=Logout" >Logout</a>
+        <form name="search" action="MainController">
+            Product ID: <input type="text" name="search" placeholder="Enter ProductID" />
+            <input type="submit" name="action" value="Search" />
+        </form>
         <%
             List<Product> listProduct = (List<Product>) session.getAttribute("PRODUCT_LIST");
             Utility utility = new Utility();

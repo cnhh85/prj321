@@ -26,7 +26,7 @@ public class LoginController extends HttpServlet {
     private static final String ADMIN = "AD";
     private static final String ADMIN_PAGE = "AdminController";
     private static final String USER = "US";
-    private static final String USER_PAGE = "UserController";
+    private static final String USER_PAGE = "MainController?action=Search&search=";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

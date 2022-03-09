@@ -24,7 +24,7 @@ import user.ProductDAO;
 @WebServlet(name = "AdminController", urlPatterns = {"/AdminController"})
 public class AdminController extends HttpServlet {
 
-    private static final String ERROR = "admin.jsp";
+    private static final String ERROR = "error.jsp";
     private static final String SUCCESS = "admin.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
