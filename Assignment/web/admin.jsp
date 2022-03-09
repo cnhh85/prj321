@@ -4,6 +4,7 @@
     Author     : markhipz
 --%>
 
+<%@page import="user.Utility"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="user.Product"%>
 <%@page import="java.util.List"%>
@@ -22,11 +23,11 @@
                 response.sendRedirect("login.jsp");
                 return;
             }
-
             List<Product> listProduct = (List<Product>) session.getAttribute("PRODUCT_LIST");
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Utility utility = new Utility();
         %>
         <h1>Welcome <%=user.getFullName()%> to Admin page</h1>
+        <a href="addProduct.jsp">Add Product</a>
         <a href="MainController?action=Logout" >Logout</a>
         <% if (listProduct == null) {
         %>
@@ -61,7 +62,7 @@
                         <input type="text" name="productName" value="<%= product.getProductName()%>" />
                     </td>
                     <td>
-                        <img src="<%= product.getImage()%>" />
+                        <img src="<%= product.getImage()%>" /></br>
                         <input type="text" name="image" value="<%= product.getImage()%>" />
                     </td>
                     <td>
@@ -74,10 +75,10 @@
                         <input type="text" name="categoryID" value="<%= product.getCategoryID()%>" />
                     </td>
                     <td>
-                        <input type="text" name="importDate" value="<%= sdf.format(product.getImportDate())%>" />
+                        <input type="text" name="importDate" value="<%= utility.getSdf().format(product.getImportDate())%>" />
                     </td>
                     <td>
-                        <input type="text" name="usingDate" value="<%= sdf.format(product.getUsingDate())%>" />
+                        <input type="text" name="usingDate" value="<%= utility.getSdf().format(product.getUsingDate())%>" />
                     </td>
                     <td>
                         <input type ="hidden" name="productID" value="<%=product.getProductID()%>" />

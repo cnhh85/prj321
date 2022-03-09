@@ -29,6 +29,9 @@ public class MainController extends HttpServlet {
     private static final String DELETE_PRODUCT_CONTROLLER = "DeleteProductController";
     private static final String UPDATE_PRODUCT = "Update";
     private static final String UPDATE_PRODUCT_CONTROLLER = "UpdateProductController";
+    private static final String ADD_PRODUCT_CONTROLLER = "AddProductController";
+    private static final String ADD_PRODUCT = "AddProduct";
+    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -44,6 +47,8 @@ public class MainController extends HttpServlet {
                 url = DELETE_PRODUCT_CONTROLLER;
             } else if (UPDATE_PRODUCT.equals(action)) {
                 url = UPDATE_PRODUCT_CONTROLLER;
+            } else if (ADD_PRODUCT.equals(action)) {
+                url = ADD_PRODUCT_CONTROLLER;
             }
         } catch (Exception e) {
             log("Error at MainController " + e.toString());

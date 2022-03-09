@@ -24,6 +24,7 @@ public class ProductDAO {
     private static final String SELECT = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct";
     private static final String DELETE = "delete tblProduct where productID=?";
     private static final String UPDATE = "update tblProduct set productName=?, image=?, price=?, quantity=?, categoryID=?, importDate=?, usingDate=? where productID=?";
+    private static final String INSERT = "insert into tblProduct(productID, productName, image, price, quantity, categoryID, importDate, usingDate) values(?,?,?,?,?,?,?,?)";
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
     public List<Product> getListProduct() throws SQLException {
@@ -92,11 +93,10 @@ public class ProductDAO {
         return result;
     }
 
-    public boolean updateProduct(Product product) throws SQLException{
+    public boolean updateProduct(Product product) throws SQLException {
         boolean result = false;
         Connection conn = null;
         PreparedStatement stm = null;
-        ResultSet rs = null;
         try {
             conn = DBUtils.getConnection();
             if (conn != null) {
@@ -114,9 +114,37 @@ public class ProductDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (rs != null) {
-                rs.close();
+            if (stm != null) {
+                stm.close();
             }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return result;
+    }
+
+    public boolean addProduct(Product product) throws SQLException {
+        boolean result = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                stm = conn.prepareStatement(INSERT);
+                stm.setString(1, product.getProductID());
+                stm.setString(2, product.getProductName());
+                stm.setString(3, product.getImage());
+                stm.setString(4, String.valueOf(product.getPrice()));
+                stm.setString(5, String.valueOf(product.getQuantity()));
+                stm.setString(6, product.getCategoryID());
+                stm.setString(7, sdf.format(product.getImportDate()));
+                stm.setString(8, sdf.format(product.getUsingDate()));
+                result = stm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             if (stm != null) {
                 stm.close();
             }
