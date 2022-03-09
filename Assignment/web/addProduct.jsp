@@ -94,6 +94,13 @@
             </br>
             <input type="submit" name="action" value="AddProduct" />
             <input type="reset" value="Reset" />
+            <%
+                if (pE.getUnknownError() != "") {
+            %>
+            <span><%=pE.getUnknownError() %></span>
+            <%
+                }
+            %>
         </form>
     </body>
 </html>
