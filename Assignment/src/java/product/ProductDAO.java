@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package user;
+package product;
 
+import product.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,10 +23,10 @@ import utils.DBUtils;
 public class ProductDAO {
 
     private static final String SELECT = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct";
-    private static final String SEARCH = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct where productName like ?";
     private static final String DELETE = "delete tblProduct where productID=?";
     private static final String UPDATE = "update tblProduct set productName=?, image=?, price=?, quantity=?, categoryID=?, importDate=?, usingDate=? where productID=?";
     private static final String INSERT = "insert into tblProduct(productID, productName, image, price, quantity, categoryID, importDate, usingDate) values(?,?,?,?,?,?,?,?)";
+    private static final String SEARCH = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct where productName like ?";
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
     //these function is for admin only
@@ -196,4 +197,5 @@ public class ProductDAO {
         }
         return list;
     }
+
 }

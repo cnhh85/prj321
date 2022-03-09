@@ -4,9 +4,9 @@
     Author     : markhipz
 --%>
 
-<%@page import="user.Utility"%>
+<%@page import="utility.Utility"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="user.Product"%>
+<%@page import="product.Product"%>
 <%@page import="java.util.List"%>
 <%@page import="user.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

@@ -4,9 +4,10 @@
     Author     : markhipz
 --%>
 
+<%@page import="product.Category"%>
 <%@page import="java.util.List"%>
-<%@page import="user.Utility"%>
-<%@page import="user.Product"%>
+<%@page import="utility.Utility"%>
+<%@page import="product.Product"%> 
 <%@page import="user.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -55,7 +56,13 @@
             <tbody>
                 <%if (listProduct.size() > 0) {
                         int count = 1;
-                        for (Product product : listProduct) {%>
+                        for (Product product : listProduct) {
+                            for (Category c : utility.getListCategory()) {
+                                if (product.getCategoryID().equals(c.getCategoryID())) {
+                                    product.setCategoryID(c.getCategoryName());
+                                }
+                            }
+                %>
             <form action="MainController">
                 <tr>
                     <td><%= count++%></td>
