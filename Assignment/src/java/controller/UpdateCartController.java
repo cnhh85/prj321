@@ -6,7 +6,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,11 +19,11 @@ import shopping.Cart;
  *
  * @author markhipz
  */
-@WebServlet(name = "AddToCartController", urlPatterns = {"/AddToCartController"})
-public class AddToCartController extends HttpServlet {
+@WebServlet(name = "UpdateCartController", urlPatterns = {"/UpdateCartController"})
+public class UpdateCartController extends HttpServlet {
 
     private static final String ERROR = "error.jsp";
-    private static final String SUCCESS = "MainController?action=Search&search=";
+    private static final String SUCCESS = "viewCart.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -32,29 +31,22 @@ public class AddToCartController extends HttpServlet {
         String url = ERROR;
         try {
             String productID = request.getParameter("productID");
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
             HttpSession session = request.getSession();
-            List<Product> listProduct = (List<Product>) session.getAttribute("PRODUCT_LIST");
+            Cart cart = (Cart) session.getAttribute("CART");
             Product product = null;
-            for (Product p : listProduct) {
+            for (Product p : cart.getCart().values()) {
                 if (p.getProductID().equals(productID)) {
                     product = p;
-                    product.setQuantity(1);
+                    product.setQuantity(quantity);
                     break;
                 }
             }
-
-            Cart cart = (Cart) session.getAttribute("CART");
-            if (cart == null) {
-                cart = new Cart();
-            }
-
-            cart.add(product);
+            cart.update(product);
             session.setAttribute("CART", cart);
             url = SUCCESS;
-            String message = "Successfully add " + product.getProductName() + " to cart!";
-            request.setAttribute("MESSAGE", message);
         } catch (Exception e) {
-            log("Error at AddToCartController " + e.toString());
+            log("Error at UpdateCartController " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

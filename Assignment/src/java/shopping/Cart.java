@@ -40,6 +40,8 @@ public class Cart {
         if (this.cart.containsKey(product.getProductID())) {
             int quantity = this.cart.get(product.getProductID()).getQuantity();
             product.setQuantity(1 + quantity);
+            update(product);
+            return;
         }
 
         this.cart.put(product.getProductID(), product);

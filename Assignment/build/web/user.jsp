@@ -26,6 +26,7 @@
         %>
         <h1>Welcome <%=user.getFullName()%></h1>
         <a href="MainController?action=Logout" >Logout</a>
+        <a href="viewCart.jsp">View Cart</a>
         <form name="search" action="MainController">
             Product ID: <input type="text" name="search" placeholder="Enter ProductID" />
             <input type="submit" name="action" value="Search" />

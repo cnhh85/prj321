@@ -34,6 +34,10 @@ public class MainController extends HttpServlet {
     private static final String SEARCH_PRODUCT_CONTROLLER = "SearchProductController";
     private static final String ADD_TO_CART = "Add to cart";
     private static final String ADD_TO_CART_CONTROLLER = "AddToCartController";
+    private static final String UPDATE_CART = "UpdateCart";
+    private static final String UPDATE_CART_CONTROLLER = "UpdateCartController";
+    private static final String DELETE_CART = "DeleteCart";
+    private static final String DELETE_CART_CONTROLLER = "DeleteCartController";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -55,7 +59,11 @@ public class MainController extends HttpServlet {
                 url = SEARCH_PRODUCT_CONTROLLER;
             } else if (ADD_TO_CART.equals(action)) {
                 url = ADD_TO_CART_CONTROLLER;
-            }
+            } else if (UPDATE_CART.equals(action)) {
+                url = UPDATE_CART_CONTROLLER;
+            } else if (DELETE_CART.equals(action)) {
+                url = DELETE_CART_CONTROLLER;
+            } 
         } catch (Exception e) {
             log("Error at MainController " + e.toString());
         } finally {
