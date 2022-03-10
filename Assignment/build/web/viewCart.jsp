@@ -17,10 +17,11 @@
         <h1>Welcome to the cart</h1>
         <a href="user.jsp">Return</a>
         <%
+            int total = 0;
             Cart cart = (Cart) session.getAttribute("CART");
-            if (cart == null) {
+            if (cart.getCart().size() == 0) {
         %>
-        <p>There are nothing in cart</p>
+        <p>There are nothing in the cart</p>
         <%
         } else {
         %>
@@ -41,6 +42,7 @@
                 <%
                     int count = 1;
                     for (Product product : cart.getCart().values()) {
+                        total += product.getPrice() * product.getQuantity();
                 %>
             <form action="MainController">
                 <tr>
@@ -60,8 +62,14 @@
                 </tr>
             </form>
             <%
-                    }
                 }
             %>
-    </body>
+        </tbody>
+    </table>
+    <h1>Total: <%=total%></h1>
+    <%
+        }
+
+    %>
+</body>
 </html>
