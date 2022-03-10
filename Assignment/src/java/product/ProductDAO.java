@@ -29,7 +29,7 @@ public class ProductDAO {
     private static final String SEARCH = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct where productName like ?";
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
-    //these function is for admin only
+    //these methods is for admin only
     public List<Product> getListProduct() throws SQLException {
         List<Product> list = new ArrayList<>();
         Connection conn = null;
@@ -158,7 +158,7 @@ public class ProductDAO {
         return result;
     }
 
-    //these function is for user only
+    //these methods is for user only
     public List<Product> searchProduct(String search) throws SQLException {
         List<Product> list = new ArrayList<>();
         Connection conn = null;

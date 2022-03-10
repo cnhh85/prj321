@@ -57,9 +57,10 @@
                 <%if (listProduct.size() > 0) {
                         int count = 1;
                         for (Product product : listProduct) {
+                            String categoryName = "";
                             for (Category c : utility.getListCategory()) {
                                 if (product.getCategoryID().equals(c.getCategoryID())) {
-                                    product.setCategoryID(c.getCategoryName());
+                                    categoryName = c.getCategoryName();
                                 }
                             }
                 %>
@@ -79,7 +80,8 @@
                         <p><%= product.getQuantity()%></p>
                     </td>
                     <td>
-                        <p><%= product.getCategoryID()%></p>
+                        <p>
+                            <%= categoryName%></p>
                     </td>
                     <td>
                         <p><%= utility.getSdf().format(product.getImportDate())%></p>
@@ -90,6 +92,14 @@
                     <td>
                         <input type ="hidden" name="productID" value="<%=product.getProductID()%>" />
                         <input type="submit" name="action" value="Add to cart" />
+                        <%
+                            String message = (String) request.getAttribute("MESSAGE");
+                            if (message != null) {
+
+                        %>
+                        <p><%= message%></p>
+                        <%                            }
+                        %>
                     </td>
                 </tr>
             </form>
