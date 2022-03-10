@@ -32,6 +32,13 @@
             <input type="submit" name="action" value="Search" />
         </form>
         <%
+            String message = (String) request.getAttribute("MESSAGE");
+            if (message != null) {
+
+        %>
+        <p><%= message%></p>
+        <%
+            }
             List<Product> listProduct = (List<Product>) session.getAttribute("PRODUCT_LIST");
             Utility utility = new Utility();
         %>
@@ -93,14 +100,7 @@
                     <td>
                         <input type ="hidden" name="productID" value="<%=product.getProductID()%>" />
                         <input type="submit" name="action" value="Add to cart" />
-                        <%
-                            String message = (String) request.getAttribute("MESSAGE");
-                            if (message != null) {
 
-                        %>
-                        <p><%= message%></p>
-                        <%                            }
-                        %>
                     </td>
                 </tr>
             </form>
