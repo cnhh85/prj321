@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/markhipz/Documents/NetBeansProjects/prj321/Assignment/src/java/controller/AddProductController.java</file>
+            <file>file:/C:/Users/markhipz/Documents/NetBeansProjects/prj321/Assignment/src/java/controller/MainController.java</file>
             <file>file:/C:/Users/markhipz/Documents/NetBeansProjects/prj321/Assignment/web/user.jsp</file>
-            <file>file:/C:/Users/markhipz/Documents/NetBeansProjects/prj321/Assignment/web/admin.jsp</file>
-            <file>file:/C:/Users/markhipz/Documents/NetBeansProjects/prj321/Assignment/web/addProduct.jsp</file>
+            <file>file:/C:/Users/markhipz/Documents/NetBeansProjects/prj321/Assignment/web/viewCart.jsp</file>
         </group>
     </open-files>
 </project-private>

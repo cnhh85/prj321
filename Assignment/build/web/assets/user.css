@@ -71,7 +71,7 @@ body {
 .search {
   border: none;
   width: 80%;
-  border: 3px solid #00b4cc;
+  border: 3px solid #48cfad;
   padding: 5px;
   height: 30px;
   border-radius: 5px;
@@ -83,7 +83,7 @@ body {
   border: none;
   width: 15%;
   left: 0;
-  border: 3px solid #00b4cc;
+  border: 3px solid #48cfad;
   padding: 5px;
   border-radius: 5px;
   outline: none;

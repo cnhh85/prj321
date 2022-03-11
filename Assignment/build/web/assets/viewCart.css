@@ -13,12 +13,12 @@ body {
   place-content: center;
   width: calc(100% - 40px);
 }
-.head-content {
-  top: 0;
+
+.top {
   display: flex;
-  align-items: center;
-  margin: auto 30px;
+  margin: auto 20px;
 }
+
 .btn {
   cursor: pointer;
   align-items: center;
@@ -58,97 +58,140 @@ body {
   transform: translateY(-1px);
 }
 
-.logout {
+.btn {
   margin-left: auto;
 }
 
-.search-box {
-  margin: auto;
-  width: 800px;
-  margin-top: 30px;
+.wrapper {
+  width: 100%;
+  display: flex;
+  margin: 20px;
+}
+.left {
+  width: 60%;
+}
+.col1 {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+.img-wrapper {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+img {
+  max-width: 100px;
+  height: auto;
 }
 
-.search {
-  border: none;
-  width: 80%;
-  border: 3px solid #48cfad;
-  padding: 5px;
+table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  text-align: left;
+  border: 1px solid #b1b1b3;
+  border-radius: 5px;
+  padding: 20px;
+  background: #fff;
+}
+thead {
+  color: #969696;
+}
+
+.info {
+  margin-left: 30px;
+}
+.p-name {
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
+.ctg {
+  margin-top: 0;
+  font-size: 10;
+  color: #b1b1b3;
+}
+
+.quantity {
+  width: 80px;
   height: 30px;
-  border-radius: 5px;
-  outline: none;
-  padding-left: 5px;
+}
+.total {
+  font-weight: bold;
+  margin-bottom: 0;
 }
 
-.search-btn {
-  border: none;
-  width: 15%;
-  left: 0;
-  border: 3px solid #48cfad;
-  padding: 5px;
-  border-radius: 5px;
-  outline: none;
-  height: 46px;
+.price-1 {
+  margin-top: 0;
+  font-size: 10px;
+  color: #b1b1b3;
+}
+
+.action {
+  display: flex;
+}
+
+.update {
+  margin-left: auto;
   cursor: pointer;
+  width: 100px;
+  height: 35px;
+  border: none;
+  background: #48cfad;
+  color: #fff;
   -webkit-transition: all 200ms ease-out;
   transition: all 200ms ease-out;
+  border: 2px solid #48cfad;
+  border-radius: 100px 0 0 100px;
 }
 
-.search-btn:hover {
-  background-color: #00b4cc;
+.delete {
+  cursor: pointer;
+  width: 70px;
+  max-height: 35px;
+  border: none;
+  background: #e7463a;
   color: #fff;
-}
-
-.grid-container {
-  justify-content: space-around;
-  margin: 70px auto 0;
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  padding: 10px;
-  gap: 45px;
-  width: 80%;
-}
-@media screen and (max-width: 1400px) {
-  .grid-container {
-    grid-template-columns: auto auto auto;
-  }
-}
-.card {
-  width: 300px;
-  height: 450px;
-  background: rgba(255, 255, 255, 0.4);
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-}
-.image-wrapper {
-  width: 300px;
-  height: 300px;
-  background-color: #fff;
+  -webkit-transition: all 200ms ease-out;
+  transition: all 200ms ease-out;
+  border: 2px solid #e7463a;
+  text-decoration: none;
+  font-size: 14px;
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-img {
-  max-width: 300px;
-  height: auto;
-}
-.card-content {
-  padding: 25px 35px 0;
-  height: 75px;
-}
-.card-name {
-  font-size: 22px;
-  color: #393c45;
-}
-.card-price {
-  float: right;
+.update:hover {
+  background: #fff;
   color: #48cfad;
-  font-size: 22px;
-  font-weight: 600;
 }
-.category-name {
-  font-size: 16px;
-  color: #b1b1b3;
-  padding: 2px 0 20px 0;
-  margin: 5px auto 0;
+.delete:hover {
+  background: #fff;
+  color: #e7463a;
+}
+
+.right {
+  margin: auto;
+  width: 400px;
+  height: 200px;
+  border: 1px solid #b1b1b3;
+  border-radius: 5px;
+  padding: 20px;
+  background: #fff;
+  justify-items: center;
+}
+.right h1 {
+  text-align: center;
+}
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .submit {
   cursor: pointer;
@@ -161,6 +204,7 @@ img {
   -webkit-transition: all 200ms ease-out;
   transition: all 200ms ease-out;
   border: 2px solid #48cfad;
+  margin: auto;
 }
 
 .submit:hover {
@@ -168,7 +212,7 @@ img {
   color: #48cfad;
 }
 
-.message {
+.error {
   text-align: center;
-  font-size: 20px;
+  margin-top: 30px;
 }
