@@ -238,4 +238,36 @@ public class ProductDAO {
 
         return result;
     }
+
+    public boolean sellProduct(Product product) throws SQLException {
+        boolean result = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        Product dtbProduct = getProduct(product.getProductID());
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                stm = conn.prepareStatement(UPDATE);
+                stm.setString(1, product.getProductName());
+                stm.setString(2, product.getImage());
+                stm.setString(3, String.valueOf(product.getPrice()));
+                stm.setString(4, String.valueOf(dtbProduct.getQuantity() - product.getQuantity()));
+                stm.setString(5, product.getCategoryID());
+                stm.setString(6, sdf.format(product.getImportDate()));
+                stm.setString(7, sdf.format(product.getUsingDate()));
+                stm.setString(8, product.getProductID());
+                result = stm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return result;
+    }
 }
