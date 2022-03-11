@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="./assets/login.css" />
-    <title>NiiNii Shop</title>
+    <title>Abyssoque</title>
   </head>
   <body>
     <% String error = (String) request.getAttribute("ERROR"); if (error ==
@@ -22,7 +22,7 @@
         <div class="right">
           <div class="form">
             <form action="MainController" method="POST">
-              <label for="text">UserID</label>
+              <label for="text">User ID</label>
               <input type="text" name="userID" id="insert" />
               <label for="password">Password</label>
               <input type="password" name="password" id="insert" />
