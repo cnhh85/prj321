@@ -29,7 +29,16 @@
         <h1>Welcome <%=user.getFullName()%> to Admin page</h1>
         <a href="addProduct.jsp">Add Product</a>
         <a href="MainController?action=Logout" >Logout</a>
-        <% if (listProduct == null) {
+
+        <%
+            String message = (String) request.getAttribute("MESSAGE");
+            if (message != null) {
+        %>
+        <p><%= message%></p>
+
+        <%
+            }
+            if (listProduct == null) {
         %>
         <h1>There are no product</h1>
         <%  } else {

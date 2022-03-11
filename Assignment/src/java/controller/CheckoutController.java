@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -68,7 +69,7 @@ public class CheckoutController extends HttpServlet {
                 }
             }
 
-        } catch (Exception e) {
+        } catch (NumberFormatException | SQLException e) {
             log("Error at CheckoutController" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

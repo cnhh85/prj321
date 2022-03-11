@@ -45,7 +45,7 @@ public class UpdateCartController extends HttpServlet {
             cart.update(product);
             session.setAttribute("CART", cart);
             url = SUCCESS;
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log("Error at UpdateCartController " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

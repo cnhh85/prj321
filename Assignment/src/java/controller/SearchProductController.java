@@ -6,7 +6,7 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +38,7 @@ public class SearchProductController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("PRODUCT_LIST", listProduct);
             url = SUCCESS;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             log("Error at SearchProductController " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

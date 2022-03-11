@@ -6,14 +6,12 @@
 package controller;
 
 import java.io.IOException;
-import java.util.List;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import product.Product;
 import product.ProductDAO;
 
 /**
@@ -37,7 +35,7 @@ public class DeleteProductController extends HttpServlet {
             if (check) {
                 url = SUCCESS;
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             log("Error at DeleteProductController" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

@@ -6,9 +6,8 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.SQLException;
+import java.text.ParseException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +32,6 @@ public class UpdateProductController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         ProductDAO pDao = new ProductDAO();
-        Utility utility = new Utility();
         boolean check = false;
         try {
             String productID = request.getParameter("productID");
@@ -44,11 +42,11 @@ public class UpdateProductController extends HttpServlet {
             String categoryID = request.getParameter("categoryID");
             String importDate = request.getParameter("importDate");
             String usingDate = request.getParameter("usingDate");
-            check = pDao.updateProduct(new Product(productID, productName, image, price, quantity, categoryID, utility.getSdf().parse(importDate), utility.getSdf().parse(usingDate)));
+            check = pDao.updateProduct(new Product(productID, productName, image, price, quantity, categoryID, Utility.getSdf().parse(importDate), Utility.getSdf().parse(usingDate)));
             if (check) {
                 url = SUCCESS;
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException | SQLException | ParseException e) {
             log("Error at UpdateProductController " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

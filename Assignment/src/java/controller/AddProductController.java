@@ -6,7 +6,8 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -36,7 +37,6 @@ public class AddProductController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         ProductDAO pDao = new ProductDAO();
-        Utility utility = new Utility();
         ProductError pE = new ProductError();
         boolean isValidated = true;
         boolean check = false;
@@ -100,27 +100,26 @@ public class AddProductController extends HttpServlet {
 
             //Handle import date Error
             String importDate = request.getParameter("importDate");
-            if (!importDate.matches(utility.getPattern())) {
+            if (!importDate.matches(Utility.getPattern())) {
                 pE.setImportDateError("Invalid date format!");
                 isValidated = false;
-            } else if (utility.handleParseDate(importDate) == null) {
+            } else if (Utility.handleParseDate(importDate) == null) {
                 pE.setImportDateError("Date not exist");
                 isValidated = false;
-            } else if (utility.isValidImportDate(sdf.parse(importDate))) {
+            } else if (Utility.isValidImportDate(sdf.parse(importDate))) {
                 pE.setImportDateError("Import date cannot before today");
                 isValidated = false;
             }
 
-
             //Handle using date Error
             String usingDate = request.getParameter("usingDate");
-            if (!usingDate.matches(utility.getPattern())) {
+            if (!usingDate.matches(Utility.getPattern())) {
                 pE.setUsingDateError("Invalid date format!");
                 isValidated = false;
-            } else if (utility.handleParseDate(usingDate) == null) {
+            } else if (Utility.handleParseDate(usingDate) == null) {
                 pE.setUsingDateError("Date not exist");
                 isValidated = false;
-            } else if (!utility.isValidUsingDate(sdf.parse(importDate), sdf.parse(usingDate))) {
+            } else if (!Utility.isValidUsingDate(sdf.parse(importDate), sdf.parse(usingDate))) {
                 pE.setUsingDateError("Using date must after Import date");
                 isValidated = false;
             }
@@ -138,6 +137,8 @@ public class AddProductController extends HttpServlet {
                 check = pDao.addProduct(new Product(productID, productName, image, price, quantity, categoryID, sdf.parse(importDate), sdf.parse(usingDate)));
                 if (check) {
                     url = SUCCESS;
+                    String message = "Add success fully " + productID;
+                    request.setAttribute("MESSAGE", message);
                     request.setAttribute("CONFIRM_ADD", "Success fully add");
                 } else {
                     //Handle unknown Error
@@ -147,7 +148,7 @@ public class AddProductController extends HttpServlet {
             } else {
                 request.setAttribute("PRODUCT_ERROR", pE);
             }
-        } catch (Exception e) {
+        } catch (SQLException | ParseException e) {
             log("Error at AddProductController " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

@@ -6,7 +6,7 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,7 +37,7 @@ public class AdminController extends HttpServlet {
             List<Product> listProduct = pDao.getListProduct();
             session.setAttribute("PRODUCT_LIST", listProduct);
             url = SUCCESS;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             log("Error at AdminController " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

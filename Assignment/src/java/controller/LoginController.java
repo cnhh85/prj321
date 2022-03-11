@@ -6,6 +6,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,7 +52,7 @@ public class LoginController extends HttpServlet {
             } else {
                 request.setAttribute("ERROR", "Incorrect username or password");
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             log("Error at LoginController" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);

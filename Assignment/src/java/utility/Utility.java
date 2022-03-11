@@ -25,7 +25,7 @@ public class Utility {
 
     private static final String CATEGORY = "select categoryID, categoryName from tblCategory";
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    private String pattern = "^\\d{1,2}/\\d{1,2}/\\d{4}$";
+    private static final String pattern = "^\\d{1,2}/\\d{1,2}/\\d{4}$";
 
     public Utility() {
     }
@@ -85,11 +85,11 @@ public class Utility {
         return list;
     }
 
-    public String getPattern() {
+    public static String getPattern() {
         return pattern;
     }
 
-    public SimpleDateFormat getSdf() {
+    public static SimpleDateFormat getSdf() {
         return sdf;
     }
 

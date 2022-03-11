@@ -17,9 +17,16 @@
             ProductError pE = (ProductError) request.getAttribute("PRODUCT_ERROR");
             pE = pE != null ? pE : new ProductError();
         %>
-        <h1>Add product here:</h1>
         <a href="admin.jsp">Cancel</a>
-        <form action="MainController" method="POST">
+        <h1>Add category here:</h1>
+        <form action="MainController">
+            Category ID: <input type="text" name="categoryID" placeholder="Enter category ID" required="" />
+            Category Name: <input type="text" name="categoryName" placeholder="Enter category Name" required="" />
+            <input type="submit" name="action" value="AddCategory" />
+            <input type="reset" value="Reset" />
+        </form>
+        <h1>Add product here:</h1>
+        <form action="MainController">
             Product ID <input type="text" name="productID" placeholder="Enter product ID" required="" />
             <%
                 if (pE.getProductIDError() != "") {
@@ -97,7 +104,7 @@
             <%
                 if (pE.getUnknownError() != "") {
             %>
-            <span><%=pE.getUnknownError() %></span>
+            <span><%=pE.getUnknownError()%></span>
             <%
                 }
             %>
