@@ -4,6 +4,7 @@
     Author     : markhipz
 --%>
 
+<%@page import="product.Category"%>
 <%@page import="utility.Utility"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="product.Product"%>
@@ -25,6 +26,7 @@
             }
             List<Product> listProduct = (List<Product>) session.getAttribute("PRODUCT_LIST");
             Utility utility = new Utility();
+            List<Category> listCategory = (List<Category>) session.getAttribute("CATEGORY_LIST");
         %>
         <h1>Welcome <%=user.getFullName()%> to Admin page</h1>
         <a href="addProduct.jsp">Add Product</a>
@@ -84,10 +86,10 @@
                         <input type="text" name="categoryID" value="<%= product.getCategoryID()%>" />
                     </td>
                     <td>
-                        <input type="text" name="importDate" value="<%= utility.getSdf().format(product.getImportDate())%>" />
+                        <input type="text" name="importDate" value="<%= Utility.getSdf().format(product.getImportDate())%>" />
                     </td>
                     <td>
-                        <input type="text" name="usingDate" value="<%= utility.getSdf().format(product.getUsingDate())%>" />
+                        <input type="text" name="usingDate" value="<%= Utility.getSdf().format(product.getUsingDate())%>" />
                     </td>
                     <td>
                         <input type ="hidden" name="productID" value="<%=product.getProductID()%>" />
@@ -103,6 +105,45 @@
                 }%>
         </tbody>
     </table>
+
+    <%
+        if (listCategory == null) {
+    %>
+    <h1>There are no Category</h1>
+    <%
+    } else {
+    %>
+    <table border="1">
+        <thead>
+            <tr>                   
+                <th>No.</th>
+                <th>Category ID</th>
+                <th>Category Name</th>
+                <th>Update category</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%if (listCategory.size() > 0) {
+                    int count = 1;
+                    for (Category category : listCategory) {%>
+        <form action="MainController">
+            <tr>
+                <td><%= count++%></td>
+                <td><%= category.getCategoryID()%></td>
+                <td>
+                    <input type="text" name="categoryName" value="<%= category.getCategoryName()%>" />
+                </td>
+                <td>
+                    <input type ="hidden" name="categoryID" value="<%=category.getCategoryID()%>" />
+                    <input type="submit" name="action" value="UpdateCategory" />
+                </td>
+            </tr>
+        </form>
+        <%}
+                }
+            }%>
+    </tbody>
+</table>
 
 </body>
 </html>

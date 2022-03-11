@@ -6,51 +6,41 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import product.Product;
+import product.Category;
 import product.ProductDAO;
-import utility.Utility;
 
 /**
  *
  * @author markhipz
  */
-@WebServlet(name = "UpdateProductController", urlPatterns = {"/UpdateProductController"})
-public class UpdateProductController extends HttpServlet {
-
-    private static final String ERROR = "AdminController";
+@WebServlet(name = "UpdateCategoryController", urlPatterns = {"/UpdateCategoryController"})
+public class UpdateCategoryController extends HttpServlet {
+    
+    private static final String ERROR = "error.jsp";
     private static final String SUCCESS = "AdminController";
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
-        ProductDAO pDao = new ProductDAO();
-        boolean check = false;
+        
         try {
-            String productID = request.getParameter("productID");
-            String productName = request.getParameter("productName");
-            String image = request.getParameter("image");
-            int price = Integer.parseInt(request.getParameter("price"));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            String categoryName = request.getParameter("categoryName");
             String categoryID = request.getParameter("categoryID");
-            String importDate = request.getParameter("importDate");
-            String usingDate = request.getParameter("usingDate");
-            check = pDao.updateProduct(new Product(productID, productName, image, price, quantity, categoryID, Utility.getSdf().parse(importDate), Utility.getSdf().parse(usingDate)));
+            ProductDAO pDao = new ProductDAO();
+            boolean check = pDao.updateCategory(new Category(categoryID, categoryName));
             if (check) {
-                String message = "Update successfully " + productID;
+                String message = "Update successfully " + categoryID;
                 request.setAttribute("MESSAGE", message);
                 url = SUCCESS;
-
             }
-        } catch (NumberFormatException | SQLException | ParseException e) {
-            log("Error at UpdateProductController " + e.toString());
+        } catch (Exception e) {
+            log("Error at UpdateCategoryController " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

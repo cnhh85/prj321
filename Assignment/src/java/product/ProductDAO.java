@@ -5,7 +5,6 @@
  */
 package product;
 
-import product.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,9 +25,11 @@ public class ProductDAO {
     private static final String SELECT1 = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct where productID=?";
     private static final String DELETE = "delete tblProduct where productID=?";
     private static final String UPDATE = "update tblProduct set productName=?, image=?, price=?, quantity=?, categoryID=?, importDate=?, usingDate=? where productID=?";
+    private static final String UPDATE_CATEGORY = "update tblCategory set categoryName=? where categoryID=?";
     private static final String INSERT = "insert into tblProduct(productID, productName, image, price, quantity, categoryID, importDate, usingDate) values(?,?,?,?,?,?,?,?)";
+    private static final String INSERT_CATEGORY = "insert into tblCategory(categoryID, categoryName) values(?,?)";
     private static final String SEARCH = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct where productName like ?";
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy/MM/dd");
 
     //these methods is for admin only
     public List<Product> getListProduct() throws SQLException {
@@ -110,12 +111,37 @@ public class ProductDAO {
                 stm.setString(3, String.valueOf(product.getPrice()));
                 stm.setString(4, String.valueOf(product.getQuantity()));
                 stm.setString(5, product.getCategoryID());
-                stm.setString(6, sdf.format(product.getImportDate()));
-                stm.setString(7, sdf.format(product.getUsingDate()));
+                stm.setString(6, SDF.format(product.getImportDate()));
+                stm.setString(7, SDF.format(product.getUsingDate()));
                 stm.setString(8, product.getProductID());
                 result = stm.executeUpdate() > 0;
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return result;
+    }
+    
+    public boolean updateCategory(Category category) throws SQLException {
+        boolean result = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                stm = conn.prepareStatement(UPDATE_CATEGORY);
+                stm.setString(1, category.getCategoryName());
+                stm.setString(2, category.getCategoryID());
+                result = stm.executeUpdate() > 0;
+            }
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
             if (stm != null) {
@@ -142,11 +168,36 @@ public class ProductDAO {
                 stm.setString(4, String.valueOf(product.getPrice()));
                 stm.setString(5, String.valueOf(product.getQuantity()));
                 stm.setString(6, product.getCategoryID());
-                stm.setString(7, sdf.format(product.getImportDate()));
-                stm.setString(8, sdf.format(product.getUsingDate()));
+                stm.setString(7, SDF.format(product.getImportDate()));
+                stm.setString(8, SDF.format(product.getUsingDate()));
                 result = stm.executeUpdate() > 0;
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return result;
+    }
+
+    public boolean addCategory(Category category) throws SQLException {
+        boolean result = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                stm = conn.prepareStatement(INSERT_CATEGORY);
+                stm.setString(1, category.getCategoryID());
+                stm.setString(2, category.getCategoryName());
+                result = stm.executeUpdate() > 0;
+            }
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
             if (stm != null) {
@@ -253,8 +304,8 @@ public class ProductDAO {
                 stm.setString(3, String.valueOf(product.getPrice()));
                 stm.setString(4, String.valueOf(dtbProduct.getQuantity() - product.getQuantity()));
                 stm.setString(5, product.getCategoryID());
-                stm.setString(6, sdf.format(product.getImportDate()));
-                stm.setString(7, sdf.format(product.getUsingDate()));
+                stm.setString(6, SDF.format(product.getImportDate()));
+                stm.setString(7, SDF.format(product.getUsingDate()));
                 stm.setString(8, product.getProductID());
                 result = stm.executeUpdate() > 0;
             }

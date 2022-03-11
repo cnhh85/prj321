@@ -28,8 +28,12 @@ public class MainController extends HttpServlet {
     private static final String DELETE_PRODUCT_CONTROLLER = "DeleteProductController";
     private static final String UPDATE_PRODUCT = "Update";
     private static final String UPDATE_PRODUCT_CONTROLLER = "UpdateProductController";
+    private static final String UPDATE_CATEGORY = "UpdateCategory";
+    private static final String UPDATE_CATEGORY_CONTROLLER = "UpdateCategoryController";
     private static final String ADD_PRODUCT = "AddProduct";
     private static final String ADD_PRODUCT_CONTROLLER = "AddProductController";
+    private static final String ADD_CATEGORY = "AddCategory";
+    private static final String ADD_CATEGORY_CONTROLLER = "AddCategoryController";
     private static final String SEARCH_PRODUCT = "Search";
     private static final String SEARCH_PRODUCT_CONTROLLER = "SearchProductController";
     private static final String ADD_TO_CART = "Add to cart";
@@ -55,8 +59,12 @@ public class MainController extends HttpServlet {
                 url = DELETE_PRODUCT_CONTROLLER;
             } else if (UPDATE_PRODUCT.equals(action)) {
                 url = UPDATE_PRODUCT_CONTROLLER;
+            } else if (UPDATE_CATEGORY.equals(action)) {
+                url = UPDATE_CATEGORY_CONTROLLER;
             } else if (ADD_PRODUCT.equals(action)) {
                 url = ADD_PRODUCT_CONTROLLER;
+            } else if (ADD_CATEGORY.equals(action)) {
+                url = ADD_CATEGORY_CONTROLLER;
             } else if (SEARCH_PRODUCT.equals(action)) {
                 url = SEARCH_PRODUCT_CONTROLLER;
             } else if (ADD_TO_CART.equals(action)) {

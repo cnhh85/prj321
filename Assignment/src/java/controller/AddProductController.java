@@ -8,7 +8,6 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,7 +29,6 @@ public class AddProductController extends HttpServlet {
 
     private static final String ERROR = "addProduct.jsp";
     private static final String SUCCESS = "AdminController";
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,6 +48,13 @@ public class AddProductController extends HttpServlet {
             if (productID.length() > 10 || productID.length() < 2) {
                 pE.setProductIDError("Product ID must be [2,10]");
                 isValidated = false;
+            } else {
+                for (Product product : listProduct) {
+                    if (product.getProductID().equals(productID)) {
+                        pE.setProductIDError("Product ID is duplicated: " + productID);
+                        isValidated = false;
+                    }
+                }
             }
 
             //Handle ProductName Error
@@ -106,7 +111,7 @@ public class AddProductController extends HttpServlet {
             } else if (Utility.handleParseDate(importDate) == null) {
                 pE.setImportDateError("Date not exist");
                 isValidated = false;
-            } else if (Utility.isValidImportDate(sdf.parse(importDate))) {
+            } else if (Utility.isValidImportDate(Utility.getSdf().parse(importDate))) {
                 pE.setImportDateError("Import date cannot before today");
                 isValidated = false;
             }
@@ -119,27 +124,17 @@ public class AddProductController extends HttpServlet {
             } else if (Utility.handleParseDate(usingDate) == null) {
                 pE.setUsingDateError("Date not exist");
                 isValidated = false;
-            } else if (!Utility.isValidUsingDate(sdf.parse(importDate), sdf.parse(usingDate))) {
+            } else if (!Utility.isValidUsingDate(Utility.getSdf().parse(importDate), Utility.getSdf().parse(usingDate))) {
                 pE.setUsingDateError("Using date must after Import date");
                 isValidated = false;
             }
 
-            //Handle duplicate product id Error
             if (isValidated) {
-                for (Product product : listProduct) {
-                    if (product.getProductID().equals(productID)) {
-                        pE.setProductIDError("Product ID is duplicated: " + productID);
-                        isValidated = false;
-                    }
-                }
-            }
-            if (isValidated) {
-                check = pDao.addProduct(new Product(productID, productName, image, price, quantity, categoryID, sdf.parse(importDate), sdf.parse(usingDate)));
+                check = pDao.addProduct(new Product(productID, productName, image, price, quantity, categoryID, Utility.getSdf().parse(importDate), Utility.getSdf().parse(usingDate)));
                 if (check) {
                     url = SUCCESS;
                     String message = "Add success fully " + productID;
                     request.setAttribute("MESSAGE", message);
-                    request.setAttribute("CONFIRM_ADD", "Success fully add");
                 } else {
                     //Handle unknown Error
                     pE.setUnknownError("Something went wrong");

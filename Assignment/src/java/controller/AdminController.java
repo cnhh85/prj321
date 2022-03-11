@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import product.Product;
 import product.ProductDAO;
+import utility.Utility;
 
 /**
  *
@@ -36,6 +37,7 @@ public class AdminController extends HttpServlet {
             HttpSession session = request.getSession();
             List<Product> listProduct = pDao.getListProduct();
             session.setAttribute("PRODUCT_LIST", listProduct);
+            session.setAttribute("CATEGORY_LIST", Utility.getListCategory());
             url = SUCCESS;
         } catch (SQLException e) {
             log("Error at AdminController " + e.toString());

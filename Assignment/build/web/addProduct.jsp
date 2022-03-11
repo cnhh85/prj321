@@ -4,6 +4,7 @@
     Author     : markhipz
 --%>
 
+<%@page import="product.CategoryError"%>
 <%@page import="product.ProductError"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,12 +17,30 @@
         <%
             ProductError pE = (ProductError) request.getAttribute("PRODUCT_ERROR");
             pE = pE != null ? pE : new ProductError();
+            CategoryError cE = (CategoryError) request.getAttribute("CATEGORY_ERROR");
+            cE = cE != null ? cE : new CategoryError();
         %>
         <a href="admin.jsp">Cancel</a>
         <h1>Add category here:</h1>
         <form action="MainController">
             Category ID: <input type="text" name="categoryID" placeholder="Enter category ID" required="" />
+            <%
+                if (cE.getCategoryIDError() != "") {
+            %>
+            <span><%=cE.getCategoryIDError()%></span>
+            <%
+                }
+            %>
+            </br>
             Category Name: <input type="text" name="categoryName" placeholder="Enter category Name" required="" />
+            <%
+                if (cE.getCategoryNameError() != "") {
+            %>
+            <span><%=cE.getCategoryNameError()%></span>
+            <%
+                }
+            %>
+            </br>
             <input type="submit" name="action" value="AddCategory" />
             <input type="reset" value="Reset" />
         </form>
