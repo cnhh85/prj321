@@ -34,7 +34,6 @@
         <%
             String message = (String) request.getAttribute("MESSAGE");
             if (message != null) {
-
         %>
         <p><%= message%></p>
         <%

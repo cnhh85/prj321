@@ -68,6 +68,18 @@
     </table>
     <h1>Total: <%=total%></h1>
     <%
+    %>
+    <form action="MainController">
+        <input type="hidden" name="total" value="<%=total%>" />
+        <input type="submit" name="action" value="Checkout" />
+    </form>
+    <%
+        String message = (String) request.getAttribute("MESSAGE");
+        if (message != null) {
+    %>
+    <p><%= message%></p>
+    <%
+            }
         }
 
     %>

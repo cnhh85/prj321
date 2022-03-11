@@ -23,6 +23,7 @@ import utils.DBUtils;
 public class ProductDAO {
 
     private static final String SELECT = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct";
+    private static final String SELECT1 = "select productID, productName, image, price, quantity, categoryID, importDate, usingDate from tblProduct where productID=?";
     private static final String DELETE = "delete tblProduct where productID=?";
     private static final String UPDATE = "update tblProduct set productName=?, image=?, price=?, quantity=?, categoryID=?, importDate=?, usingDate=? where productID=?";
     private static final String INSERT = "insert into tblProduct(productID, productName, image, price, quantity, categoryID, importDate, usingDate) values(?,?,?,?,?,?,?,?)";
@@ -198,4 +199,43 @@ public class ProductDAO {
         return list;
     }
 
+    public Product getProduct(String productID) throws SQLException {
+        Product result = null;
+
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBUtils.getConnection();
+            if (conn != null) {
+                stm = conn.prepareStatement(SELECT1);
+                stm.setString(1, productID);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    String productName = rs.getString("productName");
+                    String image = rs.getString("image");
+                    int price = rs.getInt("price");
+                    int quantity = rs.getInt("quantity");
+                    String categoryID = rs.getString("categoryID");
+                    Date importDate = new Date(rs.getDate("importDate").getTime());
+                    Date usingDate = new Date(rs.getDate("usingDate").getTime());
+                    result = new Product(productID, productName, image, price, quantity, categoryID, importDate, usingDate);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+
+        return result;
+    }
 }
