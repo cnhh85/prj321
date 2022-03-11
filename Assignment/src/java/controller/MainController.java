@@ -36,7 +36,7 @@ public class MainController extends HttpServlet {
     private static final String ADD_CATEGORY_CONTROLLER = "AddCategoryController";
     private static final String SEARCH_PRODUCT = "Search";
     private static final String SEARCH_PRODUCT_CONTROLLER = "SearchProductController";
-    private static final String ADD_TO_CART = "Add to cart";
+    private static final String ADD_TO_CART = "ADD TO CART";
     private static final String ADD_TO_CART_CONTROLLER = "AddToCartController";
     private static final String UPDATE_CART = "UpdateCart";
     private static final String UPDATE_CART_CONTROLLER = "UpdateCartController";
