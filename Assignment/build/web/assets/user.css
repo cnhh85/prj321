@@ -128,7 +128,7 @@ body {
 }
 img {
   max-width: 300px;
-  height: auto;
+  max-height: 300px;
 }
 .card-content {
   padding: 25px 35px 0;
